@@ -13,5 +13,6 @@ See https://github.com/Ryzee119/OpenXenium.
 ## Build (Original Xbox)
 Setup and install [nxdk](https://github.com/XboxDev/nxdk/).
 ```
+git clone --recursive https://github.com/Ryzee119/Xenium-Tools.git
 make -f Makefile.nxdk NXDK_DIR=/path/to/nxdk
 ```
