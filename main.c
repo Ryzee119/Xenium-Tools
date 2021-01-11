@@ -31,6 +31,7 @@
 #include "menu.h"
 
 #ifdef NXDK
+#include <xboxkrnl/xboxkrnl.h>
 #include <hal/video.h>
 #include <hal/debug.h>
 #include <windows.h>
@@ -77,5 +78,12 @@ int main(void)
     lv_sdl_deinit_display();
     lv_if_deinit_filesystem(fs_id);
     lv_deinit();
+
+#ifdef NXDK
+    if (get_quit_event() == SHUTDOWN)
+        HalInitiateShutdown();
+    if (get_quit_event() == REBOOT)
+        HalReturnToFirmware(HalRebootRoutine);
+#endif
     return 0;
 }

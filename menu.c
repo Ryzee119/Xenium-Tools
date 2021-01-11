@@ -67,6 +67,7 @@ static void cb_btn_xenium_write_raw(lv_obj_t *ta, lv_event_t e);
 static void cb_btn_xenium_write_update(lv_obj_t *ta, lv_event_t e);
 static void cb_btn_xenium_rgb(lv_obj_t *ta, lv_event_t e);
 static void cb_btn_poweroff(lv_obj_t *ta, lv_event_t e);
+static void cb_btn_exit(lv_obj_t *ta, lv_event_t e);
 static void cb_btn_cancel(lv_obj_t *ta, lv_event_t e);
 
 //Called every so often to perform lower priority background tasks
@@ -112,6 +113,7 @@ void create_menu(void)
     lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_UPLOAD, "Write XeniumOS 2.3.1 Update File"), cb_btn_xenium_write_update);
     lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_LOOP, "Cycle the Xenium RGB LED"), cb_btn_xenium_rgb);
     lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_TRASH, "Cancel Current Action"), cb_btn_cancel);
+    lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_NEW_LINE, "Exit"), cb_btn_exit);
     lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_POWER, "Power Off"), cb_btn_poweroff);
 
     lv_group_add_obj(input_group, main_list); //Register it with the input driver
@@ -383,11 +385,32 @@ static void cb_btn_poweroff(lv_obj_t *ta, lv_event_t e)
     if (e == LV_EVENT_PRESSED)
     {
         lv_label_set_text(status_label, "Powering off...");
-        set_quit_event(true);
+        set_quit_event(SHUTDOWN);
     }
     else if (e == LV_EVENT_CANCEL)
     {
         lv_textarea_set_text(alert_box, "Power of the system\n");
+        lv_obj_fade_out(alert_box, 500, 1500);
+    }
+}
+
+/* Exit back to dashboard */
+static void cb_btn_exit(lv_obj_t *ta, lv_event_t e)
+{
+    if (xenium_flash_busy())
+        return;
+
+    if (xenium_queue[0] != 0xFFFF)
+        return;
+
+    if (e == LV_EVENT_PRESSED)
+    {
+        lv_label_set_text(status_label, "Exiting...");
+        set_quit_event(REBOOT);
+    }
+    else if (e == LV_EVENT_CANCEL)
+    {
+        lv_textarea_set_text(alert_box, "Exit back to dashboard\n");
         lv_obj_fade_out(alert_box, 500, 1500);
     }
 }
