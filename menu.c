@@ -778,12 +778,12 @@ static void xenium_task_handler(lv_task_t *task)
         xenium_queue[array_len - 1] = 0xFFFF;
 
         if (xenium_queue[0] == 0xFFFF)
-            lv_label_set_text(status_label, "Idle");
+            lv_label_set_text(status_label, "Idle - Last command successful");
     }
     else if (state == FINISHED_WITH_ERROR)
     {
         memset(xenium_queue, 0xFF, sizeof(xenium_queue));
-        lv_label_set_text(status_label, "Idle");
+        lv_label_set_text(status_label, "Idle - Error or last command cancelled");
         xenium_tasks_number = 0;
     }
 }
