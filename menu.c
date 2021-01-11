@@ -100,6 +100,8 @@ void create_menu(void)
     lv_obj_t *header = lv_img_create(lv_scr_act(), NULL);
     lv_img_set_src(header, &xenium_tools_header);
     lv_obj_align(header, lv_scr_act(), LV_ALIGN_IN_TOP_MID, 0, YMARGIN);
+    lv_obj_set_style_local_image_recolor_opa(header, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, 100);
+    lv_obj_set_style_local_image_recolor(header, LV_IMG_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
 
     /* Create a List on the Active Screen for Menu Items with callbacks*/
     main_list = lv_list_create(lv_scr_act(), NULL);
