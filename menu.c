@@ -111,7 +111,7 @@ void create_menu(void)
 
     lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_REFRESH, "Rescan for Xenium"), cb_btn_xenium_rescan);
     lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_DOWNLOAD, "Dump Xenium Flash Memory"), cb_btn_xenium_dump);
-    lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_UPLOAD, "Write a Raw 2Mb Flash Dump"), cb_btn_xenium_write_raw);
+    lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_UPLOAD, "Write a Raw 2MB Flash Dump"), cb_btn_xenium_write_raw);
     lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_UPLOAD, "Write XeniumOS 2.3.1 Update File"), cb_btn_xenium_write_update);
     lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_LOOP, "Cycle the Xenium RGB LED"), cb_btn_xenium_rgb);
     lv_obj_set_event_cb(lv_list_add_btn(main_list, LV_SYMBOL_TRASH, "Cancel Current Action"), cb_btn_cancel);
@@ -255,7 +255,7 @@ static void cb_btn_xenium_dump(lv_obj_t *ta, lv_event_t e)
     }
 }
 
-/* Write a raw 2mb flash dump to the Xenium */
+/* Write a raw 2MB flash dump to the Xenium */
 static void cb_btn_xenium_write_raw(lv_obj_t *ta, lv_event_t e)
 {
     if (xenium_queue[0] != 0xFFFF)
@@ -278,7 +278,7 @@ static void cb_btn_xenium_write_raw(lv_obj_t *ta, lv_event_t e)
     else if (e == LV_EVENT_CANCEL)
     {
         lv_textarea_set_cursor_pos(alert_box, 0);
-        lv_textarea_set_text(alert_box, "Write a raw 2mb flash dump to the Xenium");
+        lv_textarea_set_text(alert_box, "Write a raw 2MB flash dump to the Xenium");
         lv_obj_fade_out(alert_box, 500, 1500);
     }
 }
