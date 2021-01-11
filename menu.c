@@ -201,7 +201,6 @@ static void cb_btn_xenium_rescan(lv_obj_t *ta, lv_event_t e)
     if (xenium_flash_busy())
         return;
 
-    char buf[64];
     if (e == LV_EVENT_PRESSED)
     {
         const char *status;
@@ -215,11 +214,13 @@ static void cb_btn_xenium_rescan(lv_obj_t *ta, lv_event_t e)
             status = "Xenium Not Detected";
             lv_led_off(xenium_status_orb);
         }
+        lv_textarea_set_cursor_pos(alert_box, 0);
         lv_textarea_set_text(alert_box, status);
         lv_obj_fade_out(alert_box, 500, 700);
     }
     else if (e == LV_EVENT_CANCEL)
     {
+        lv_textarea_set_cursor_pos(alert_box, 0);
         lv_textarea_set_text(alert_box, "Rescan the LPC header for a Xenium modchip\n");
         lv_obj_fade_out(alert_box, 500, 1500);
     }
@@ -246,6 +247,7 @@ static void cb_btn_xenium_dump(lv_obj_t *ta, lv_event_t e)
     }
     else if (e == LV_EVENT_CANCEL)
     {
+        lv_textarea_set_cursor_pos(alert_box, 0);
         lv_textarea_set_text(alert_box, "Dump the full Xenium flash chip to 'xenium_flash.bin.'");
         lv_obj_fade_out(alert_box, 500, 1500);
     }
@@ -273,6 +275,7 @@ static void cb_btn_xenium_write_raw(lv_obj_t *ta, lv_event_t e)
     }
     else if (e == LV_EVENT_CANCEL)
     {
+        lv_textarea_set_cursor_pos(alert_box, 0);
         lv_textarea_set_text(alert_box, "Write a raw 2mb flash dump to the Xenium");
         lv_obj_fade_out(alert_box, 500, 1500);
     }
@@ -307,6 +310,7 @@ static void cb_btn_xenium_write_update(lv_obj_t *ta, lv_event_t e)
     }
     else if (e == LV_EVENT_CANCEL)
     {
+        lv_textarea_set_cursor_pos(alert_box, 0);
         lv_textarea_set_text(alert_box, "Write a XeniumOS v2.3.1 update file\n");
         lv_textarea_add_text(alert_box, "These can be found on the internet easily");
         lv_obj_fade_out(alert_box, 500, 1500);
@@ -368,6 +372,7 @@ static void cb_btn_xenium_rgb(lv_obj_t *ta, lv_event_t e)
     }
     else if (e == LV_EVENT_CANCEL)
     {
+        lv_textarea_set_cursor_pos(alert_box, 0);
         lv_textarea_set_text(alert_box, "Cycle the Xenium's RGB LED\n");
         lv_obj_fade_out(alert_box, 500, 1500);
     }
@@ -389,6 +394,7 @@ static void cb_btn_poweroff(lv_obj_t *ta, lv_event_t e)
     }
     else if (e == LV_EVENT_CANCEL)
     {
+        lv_textarea_set_cursor_pos(alert_box, 0);
         lv_textarea_set_text(alert_box, "Power of the system\n");
         lv_obj_fade_out(alert_box, 500, 1500);
     }
@@ -410,6 +416,7 @@ static void cb_btn_exit(lv_obj_t *ta, lv_event_t e)
     }
     else if (e == LV_EVENT_CANCEL)
     {
+        lv_textarea_set_cursor_pos(alert_box, 0);
         lv_textarea_set_text(alert_box, "Exit back to dashboard\n");
         lv_obj_fade_out(alert_box, 500, 1500);
     }
@@ -426,6 +433,7 @@ static void cb_btn_cancel(lv_obj_t *ta, lv_event_t e)
     }
     else if (e == LV_EVENT_CANCEL)
     {
+        lv_textarea_set_cursor_pos(alert_box, 0);
         lv_textarea_set_text(alert_box, "Cancel the current task\n");
         lv_textarea_add_text(alert_box, "WARNING: Interrupting a flash write can corrupt the Xenium\n");
         lv_obj_fade_out(alert_box, 500, 1500);
@@ -579,6 +587,7 @@ static void xenium_task_handler(lv_task_t *task)
             if (memcmp(&working_buffer[add], verify_buffer, len) != 0)
             {
                 printf("ERROR at sector %u!\n", sector);
+                lv_textarea_set_cursor_pos(alert_box, 0);
                 lv_textarea_set_text(alert_box, "Error writing to Xenium.");
                 lv_obj_fade_out(alert_box, 500, 1500);
             }
@@ -614,11 +623,13 @@ static void xenium_task_handler(lv_task_t *task)
 
             if (error)
             {
+                lv_textarea_set_cursor_pos(alert_box, 0);
                 lv_textarea_set_text(alert_box, "Could not save ");
                 lv_textarea_add_text(alert_box, file_name);
             }
             else
             {
+                lv_textarea_set_cursor_pos(alert_box, 0);
                 lv_textarea_set_text(alert_box, "Saved ");
                 lv_textarea_add_text(alert_box, file_name);
                 lv_textarea_add_text(alert_box, " OK!");
@@ -646,6 +657,7 @@ static void xenium_task_handler(lv_task_t *task)
                 do
                 {
                     //Create a new file, (overwrite if already exists)
+                    lv_textarea_set_cursor_pos(alert_box, 0);
                     if (lv_fs_open(&file_p, fs_create_path(fs_id, selected_file_name), LV_FS_MODE_RD) != LV_FS_RES_OK)
                     {
                         lv_textarea_set_text(alert_box, "Could not open file for reading");
