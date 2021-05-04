@@ -8,6 +8,7 @@ SRCS += \
 	$(CURDIR)/menu.c \
 	$(CURDIR)/resources/xenium_tools_header.c \
 	$(CURDIR)/xenium/xenium.c
+
 CFLAGS += \
 	-I$(CURDIR) \
 	-I$(CURDIR)/resources \
@@ -32,5 +33,7 @@ CFLAGS += \
 	-I$(CURDIR)/lvgl-sdl/lv_drv \
 	-I$(CURDIR)/lvgl-sdl/lvgl/ \
 	-I$(CURDIR)/lvgl-sdl/lvgl/src \
+
+include ftp/Makefile_ftp
 
 include $(NXDK_DIR)/Makefile

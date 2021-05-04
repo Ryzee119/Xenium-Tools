@@ -30,6 +30,7 @@
 #include "lv_sdl_drv_input.h"
 #include "lv_if_drv_filesystem.h"
 #include "xenium.h"
+#include "ftp/network.h"
 
 /* GUI Objects */
 static const int XMARGIN = 15;
@@ -44,6 +45,7 @@ static lv_task_t *xenium_tasks;
 static lv_obj_t *file_list;
 static lv_obj_t *alert_box;
 static lv_obj_t *xenium_status;
+static lv_obj_t *network_status;
 static lv_obj_t *xenium_status_orb;
 static lv_style_t xenium_status_orb_style;
 
@@ -182,6 +184,13 @@ void create_menu(void)
     lv_obj_set_hidden(file_list, true);
     lv_group_add_obj(input_group, file_list);
     lv_obj_set_event_cb(file_list, file_list_cb);
+
+    /* Create a Network Detection status */
+    network_status = lv_label_create(lv_scr_act(), NULL);
+    lv_label_set_align(network_status, LV_LABEL_ALIGN_RIGHT); /*Center aligned lines*/
+    lv_label_set_text(network_status, "IP: 0.0.0.0");
+    lv_obj_align(network_status, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -XMARGIN - 30, -YMARGIN -30);
+    lv_obj_add_style(network_status, LV_LABEL_PART_MAIN, &status_label_style);
 
     /* Setup the Xenium task handler and queue */
     xenium_tasks = lv_task_create(xenium_task_handler, 0, LV_TASK_PRIO_MID, NULL);
@@ -474,6 +483,14 @@ static void file_list_cb(lv_obj_t *ta, lv_event_t e)
 static void background_task(lv_task_t *task)
 {
     lv_bar_set_value(progress_bar, xenium_get_task_progress(), LV_ANIM_ON);
+
+
+    char ip_addr[32];
+    network_get_ip(ip_addr,sizeof(ip_addr));
+    char label_text[32];
+    snprintf(label_text, sizeof(label_text), "IP: %s", ip_addr);
+    lv_label_set_text(network_status, label_text);
+    lv_obj_align(network_status, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -XMARGIN - 30, -YMARGIN -30);
 }
 
 /* Queue a command to be perform on the Xenium asynchronously */

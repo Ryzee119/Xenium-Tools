@@ -28,15 +28,20 @@
 #include "lv_sdl_drv_display.h"
 #include "lv_sdl_drv_input.h"
 #include "lv_if_drv_filesystem.h"
+#include "ftp/network.h"
 #include "menu.h"
 
 #ifdef NXDK
 #include <xboxkrnl/xboxkrnl.h>
+#include <nxdk/mount.h>
+#include <nxdk/path.h>
 #include <hal/video.h>
 #include <hal/debug.h>
 #include <windows.h>
 //#define printf(fmt, ...) debugPrint(fmt, __VA_ARGS__)
 #endif
+
+void ftp_task(void);
 
 static const char *fs_id = "0:";
 
@@ -59,6 +64,23 @@ int main(void)
     }
 
     XVideoSetMode(width, height, LV_COLOR_DEPTH, REFRESH_DEFAULT);
+
+    char targetPath[MAX_PATH];
+    char *finalSeparator;
+    char Letter = 'A';
+    nxGetCurrentXbeNtPath(targetPath);
+
+    finalSeparator = strrchr(targetPath, '\\');
+    *(finalSeparator + 1) = '\0';
+    nxMountDrive(Letter, targetPath);
+
+    nxMountDrive('C', "\\Device\\Harddisk0\\Partition2");
+    nxMountDrive('E', "\\Device\\Harddisk0\\Partition1");
+    nxMountDrive('F', "\\Device\\Harddisk0\\Partition6");
+    nxMountDrive('G', "\\Device\\Harddisk0\\Partition7");
+    nxMountDrive('X', "\\Device\\Harddisk0\\Partition3");
+    nxMountDrive('Y', "\\Device\\Harddisk0\\Partition4");
+    nxMountDrive('Z', "\\Device\\Harddisk0\\Partition5");
 #endif
 
     lv_init();
@@ -72,6 +94,8 @@ int main(void)
     while (!get_quit_event())
     {
         lv_task_handler();
+        network_task();
+        ftp_task();
     }
 
     lv_sdl_deinit_input();
