@@ -1,0 +1,7 @@
+NXDK_CXX = y
+NXDK_NET = y
+
+SRCS += \
+	ftp/network.c \
+	ftp/ftp_server.cpp \
+	ftp/ftp_connection.cpp
