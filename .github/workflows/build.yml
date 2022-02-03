@@ -30,7 +30,7 @@ jobs:
 
     - name: Compile
       run: |
-        make -f Makefile.nxdk -j$(nproc)
+        make -f Makefile.nxdk -j$(nproc) NXDK_DIR=../nxdk
 
     # Only create artifact on a push to master
     - if: github.event_name == 'push' 
