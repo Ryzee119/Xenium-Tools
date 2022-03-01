@@ -14,7 +14,6 @@ jobs:
     - name: Install and Setup Dependencies
       run: |
         sudo apt-get update -y && sudo apt-get install -y flex bison clang lld llvm
-        cd ~
         git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/XboxDev/nxdk.git
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -24,7 +23,7 @@ jobs:
     - name: Compile
       working-directory: example
       run: |
-        eval $(~/nxdk/bin/activate -s)
+        eval $($(pwd)/nxdk/bin/activate -s)
         make -f Makefile.nxdk -j$(nproc)
     # Only create artifact on a push to master
     - if: github.event_name == 'push' 
