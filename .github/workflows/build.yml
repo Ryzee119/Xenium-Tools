@@ -1,10 +1,14 @@
 name: Xbox
 
 on:
-  pull_request:
-    branches: [ master ]
   push:
-    branches: [ master ]
+    paths:
+      - 'src/*'
+      - '.github/workflows/*'
+  pull_request:
+    paths:
+      - 'src/*'
+      - '.github/workflows/*'
 
 jobs:
   Xbox:
@@ -16,22 +20,23 @@ jobs:
         sudo apt-get update -y && sudo apt-get install -y flex bison clang lld llvm
         cd ~
         git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/XboxDev/nxdk.git
+
     - name: Checkout Repository
       uses: actions/checkout@v2
       with:
         submodules: recursive
 
     - name: Compile
-      working-directory: example
       run: |
         eval $(~/nxdk/bin/activate -s)
         make -f Makefile.nxdk -j$(nproc)
-    # Only create artifact on a push to master
+
+    # Only create artifact on a push to xbox
     - if: github.event_name == 'push' 
       name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: xenium-tools_ogxbox
+        name: SDLPoP_Xbox
         path: |
           Xenium-Tools.iso
           bin
