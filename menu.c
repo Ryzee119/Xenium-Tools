@@ -30,7 +30,6 @@
 #include "lv_sdl_drv_input.h"
 #include "lv_if_drv_filesystem.h"
 #include "xenium.h"
-#include "ftp/network.h"
 
 /* GUI Objects */
 static const int XMARGIN = 15;
@@ -483,14 +482,6 @@ static void file_list_cb(lv_obj_t *ta, lv_event_t e)
 static void background_task(lv_task_t *task)
 {
     lv_bar_set_value(progress_bar, xenium_get_task_progress(), LV_ANIM_ON);
-
-
-    char ip_addr[32];
-    network_get_ip(ip_addr,sizeof(ip_addr));
-    char label_text[32];
-    snprintf(label_text, sizeof(label_text), "IP: %s", ip_addr);
-    lv_label_set_text(network_status, label_text);
-    lv_obj_align(network_status, NULL, LV_ALIGN_IN_BOTTOM_RIGHT, -XMARGIN - 30, -YMARGIN -30);
 }
 
 /* Queue a command to be perform on the Xenium asynchronously */

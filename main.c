@@ -28,7 +28,6 @@
 #include "lv_sdl_drv_display.h"
 #include "lv_sdl_drv_input.h"
 #include "lv_if_drv_filesystem.h"
-#include "ftp/network.h"
 #include "menu.h"
 
 #ifdef NXDK
@@ -40,8 +39,6 @@
 #include <windows.h>
 //#define printf(fmt, ...) debugPrint(fmt, __VA_ARGS__)
 #endif
-
-void ftp_task(void);
 
 static const char *fs_id = "0:";
 
@@ -94,8 +91,6 @@ int main(void)
     while (!get_quit_event())
     {
         lv_task_handler();
-        network_task();
-        ftp_task();
     }
 
     lv_sdl_deinit_input();

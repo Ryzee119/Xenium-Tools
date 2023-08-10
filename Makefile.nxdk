@@ -34,6 +34,4 @@ CFLAGS += \
 	-I$(CURDIR)/lvgl-sdl/lvgl/ \
 	-I$(CURDIR)/lvgl-sdl/lvgl/src \
 
-include ftp/Makefile_ftp
-
 include $(NXDK_DIR)/Makefile
