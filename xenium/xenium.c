@@ -128,7 +128,7 @@ uint8_t xenium_is_detected()
     lpc_send_byte(0xAAAA, 0x90);
     uint8_t devid = xenium_flash_read_byte(0x02);
     xenium_flash_reset();
-    if (manuf == XENIUM_MANUF_ID &&
+    if ((manuf == XENIUM_MANUF_ID || manuf == XENIUM_MANUF_ID1) &&
         devid == XENIUM_DEVICE_ID)
     {
         return 1;
