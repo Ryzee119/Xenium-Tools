@@ -71,6 +71,8 @@ void xbox_get_memory_usage(uint32_t *used, uint32_t *total)
 
 int main()
 {
+    Sleep(10);
+
     // Mount xbe root dir to Q:
     char launcher_path[MAX_PATH];
     nxGetCurrentXbeNtPath(launcher_path);

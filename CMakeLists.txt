@@ -44,7 +44,6 @@ add_library(xenium STATIC "lib/xenium/xenium.c")
 
 set(LX_SOURCES 
     main.c
-    font_override.cpp
 )
 
 add_executable(XeniumTools
