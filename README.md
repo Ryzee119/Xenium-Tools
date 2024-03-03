@@ -8,11 +8,18 @@ See https://github.com/Ryzee119/OpenXenium.
 * Write a full flash dump to the Xenium
 * Write a XeniumOS v2.3.1 update file to the modchip.
 
-<img src="./images/xeniumtools.png" alt="basic" width="75%"/>
+<img src=".github/image.png" alt="basic" width="75%"/>
 
 ## Build (Original Xbox)
-Setup and install [nxdk](https://github.com/XboxDev/nxdk/).
+Setup [nxdk](https://github.com/XboxDev/nxdk/) dependancies.
 ```
 git clone --recursive https://github.com/Ryzee119/Xenium-Tools.git
-make -f Makefile.nxdk NXDK_DIR=/path/to/nxdk
+cd lib/nxdk
+./bin/active
+make NXDK_ONLY=y
+make tools
+cd ../../
+mkdir build && cd build
+cmake .. -DCMAKE_TOOLCHAIN_FILE=lib/nxdk/share/toolchain-nxdk.cmake
+cmake --build .
 ```

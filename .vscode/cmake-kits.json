@@ -1,0 +1,10 @@
+[
+    {
+        "name": "nxdk",
+        "description": "Use the nxdk toolchain to build Original Xbox homebrew",
+        "toolchainFile": "${workspaceFolder}/lib/nxdk/share/toolchain-nxdk.cmake",
+        "environmentVariables": {
+            "NXDK_DIR": "${workspaceFolder}/lib/nxdk"
+        }
+    }
+]

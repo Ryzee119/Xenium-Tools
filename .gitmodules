@@ -1,3 +1,9 @@
-[submodule "lvgl-sdl"]
-	path = lvgl-sdl
-	url = https://github.com/Ryzee119/lvgl-sdl.git
+[submodule "lib/cimgui"]
+	path = lib/cimgui
+	url = https://github.com/cimgui/cimgui.git
+[submodule "lib/nxdk"]
+	path = lib/nxdk
+	url = https://github.com/XboxDev/nxdk.git
+[submodule "lib/pbgl"]
+	path = lib/pbgl
+	url = https://github.com/Ryzee119/pbgl.git

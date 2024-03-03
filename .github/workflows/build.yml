@@ -10,8 +10,6 @@ jobs:
     - name: Install and Setup Dependencies
       run: |
         sudo apt-get update -y && sudo apt-get install -y flex bison clang lld llvm
-        cd ~
-        git clone --depth 1 --recurse-submodules --shallow-submodules https://github.com/XboxDev/nxdk.git
 
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -20,15 +18,22 @@ jobs:
 
     - name: Compile
       run: |
-        eval $(~/nxdk/bin/activate -s)
-        make -f Makefile.nxdk -j$(nproc)
+        eval $(lib/nxdk/bin/activate -s)
+        cd lib/nxdk
+        make NXDK_ONLY=y
+        make tools
+        cd ../..
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_TOOLCHAIN_FILE=lib/nxdk/share/toolchain-nxdk.cmake
+        cmake --build .
 
     # Only create artifact on a push to xbox
     - if: github.event_name == 'push' 
       name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
-        name: XeniumToools
+        name: XeniumTools
         path: |
-          Xenium-Tools.iso
-          bin
+          XeniumTools.iso
+          XeniumTools
