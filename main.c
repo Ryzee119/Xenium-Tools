@@ -403,7 +403,7 @@ int main()
                 }
             }
 
-#if (1)
+#if (0)
             uint32_t system_used, system_total;
             xbox_get_memory_usage(&system_used, &system_total);
             create_label("fpsdisplay", ALIGN_BOTTOM_RIGHT, (ImVec2){MARGIN - 1, MARGIN - 1},
