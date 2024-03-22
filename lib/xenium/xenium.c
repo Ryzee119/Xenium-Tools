@@ -18,9 +18,13 @@ static uint8_t _io_input(uint16_t address) {
 
 // IO CONTROL INTERFACE
 static inline void xenium_set_bank(uint8_t bank) {
-    uint8_t reg = _io_input(XENIUM_REGISTER_BANKING);
+    uint8_t reg;
+    // Double read/write for extra sanity
+    reg = _io_input(XENIUM_REGISTER_BANKING);
+    reg = _io_input(XENIUM_REGISTER_BANKING);'
     reg &= 0xF0;
     reg |= bank & 0x0F;
+    _io_output(XENIUM_REGISTER_BANKING, reg);
     _io_output(XENIUM_REGISTER_BANKING, reg);
 }
 
